@@ -1,4 +1,4 @@
-apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'application'
 
@@ -19,7 +19,7 @@ repositories {
      maven { url "http://repo.maven.apache.org/maven2" }
 }
 dependencies {
-    compile group: 'com.google.apis', name: 'google-api-services-youtube', version:'v3-rev24-1.13.2-beta'
-    compile group: 'com.google.http-client', name: 'google-http-client-jackson2', version:'1.13.1-beta'
-    compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version:'1.13.1-beta'
+    groovy group: 'com.google.apis', name: 'google-api-services-youtube', version:'v3-rev24-1.13.2-beta'
+    groovy group: 'com.google.http-client', name: 'google-http-client-jackson2', version:'1.13.1-beta'
+    groovy group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version:'1.13.1-beta'
 }

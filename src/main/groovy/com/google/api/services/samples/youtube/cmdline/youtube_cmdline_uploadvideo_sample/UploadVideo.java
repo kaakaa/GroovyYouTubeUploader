@@ -290,7 +290,8 @@ public class UploadVideo {
 
     do {
       System.out.print("Choose the number of the video file you want to upload: ");
-      inputChoice = bReader.readLine();
+      // inputChoice = bReader.readLine();
+      inputChoice = "0";
     } while (!isValidIntegerSelection(inputChoice, videoFiles.length));
 
     return videoFiles[Integer.parseInt(inputChoice)];
