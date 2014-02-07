@@ -10,7 +10,7 @@ description = """youtube-cmdline-uploadvideo-sample"""
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
-mainClassName = "com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample.UploadVideo"
+mainClassName = "com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample.YouTubeUploader"
 
 repositories {
         
@@ -22,4 +22,5 @@ dependencies {
     groovy group: 'com.google.apis', name: 'google-api-services-youtube', version:'v3-rev24-1.13.2-beta'
     groovy group: 'com.google.http-client', name: 'google-http-client-jackson2', version:'1.13.1-beta'
     groovy group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version:'1.13.1-beta'
+    groovy 'org.codehaus.groovy:groovy-all:2.2.1'
 }
