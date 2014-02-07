@@ -113,7 +113,7 @@ public class UploadVideo {
    *
    * @param args command line args (not used).
    */
-  public static void main(String[] args) {
+  public static void main(UploadParameter param) {
 
     // Scope required to upload to YouTube.
     List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
@@ -179,38 +179,38 @@ public class UploadVideo {
           .insert("snippet,statistics,status", videoObjectDefiningMetadata, mediaContent);
 
       // Set the upload type and add event listener.
-      MediaHttpUploader uploader = videoInsert.getMediaHttpUploader();
+      MediaHttpUploader mediaHttpUploader = videoInsert.getMediaHttpUploader();
 
       /*
        * Sets whether direct media upload is enabled or disabled. True = whole media content is
        * uploaded in a single request. False (default) = resumable media upload protocol to upload
        * in data chunks.
        */
-      uploader.setDirectUploadEnabled(false);
+      mediaHttpUploader.setDirectUploadEnabled(false);
 
       MediaHttpUploaderProgressListener progressListener = new MediaHttpUploaderProgressListener() {
         public void progressChanged(MediaHttpUploader uploader) throws IOException {
           switch (uploader.getUploadState()) {
-            case INITIATION_STARTED:
+            case MediaHttpUploader.INITIATION_STARTED:
               System.out.println("Initiation Started");
               break;
-            case INITIATION_COMPLETE:
+            case MediaHttpUploader.INITIATION_COMPLETE:
               System.out.println("Initiation Completed");
               break;
-            case MEDIA_IN_PROGRESS:
+            case MediaHttpUploader.MEDIA_IN_PROGRESS:
               System.out.println("Upload in progress");
               System.out.println("Upload percentage: " + uploader.getProgress());
               break;
-            case MEDIA_COMPLETE:
+            case MediaHttpUploader.MEDIA_COMPLETE:
               System.out.println("Upload Completed!");
               break;
-            case NOT_STARTED:
+            case MediaHttpUploader.NOT_STARTED:
               System.out.println("Upload Not Started!");
               break;
           }
         }
       };
-      uploader.setProgressListener(progressListener);
+      mediaHttpUploader.setProgressListener(progressListener);
 
       // Execute upload.
       Video returnedVideo = videoInsert.execute();
@@ -275,7 +275,7 @@ public class UploadVideo {
    *
    * @param videoFiles Array of video File objects
    */
-  private static File getUserChoice(File videoFiles[]) throws IOException {
+  private static File getUserChoice(File[] videoFiles) throws IOException {
 
     if (videoFiles.length < 1) {
       throw new IllegalArgumentException("No video files in this directory.");
@@ -288,36 +288,9 @@ public class UploadVideo {
     BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
     String inputChoice;
 
-    do {
-      System.out.print("Choose the number of the video file you want to upload: ");
-      // inputChoice = bReader.readLine();
-      inputChoice = "0";
-    } while (!isValidIntegerSelection(inputChoice, videoFiles.length));
+    inputChoice = "0";
 
     return videoFiles[Integer.parseInt(inputChoice)];
   }
 
-  /**
-   * Checks if string contains a valid, positive integer that is less than max. Please note, I am
-   * not testing the upper limit of an integer (2,147,483,647). I just go up to 999,999,999.
-   *
-   * @param input String to test.
-   * @param max Integer must be less then this Maximum number.
-   */
-  public static boolean isValidIntegerSelection(String input, int max) {
-    if (input.length() > 9) return false;
-
-    boolean validNumber = false;
-    // Only accepts positive numbers of up to 9 numbers.
-    Pattern intsOnly = Pattern.compile("^\\d{1,9}$");
-    Matcher makeMatch = intsOnly.matcher(input);
-
-    if (makeMatch.find()) {
-      int number = Integer.parseInt(makeMatch.group());
-      if ((number >= 0) && (number < max)) {
-        validNumber = true;
-      }
-    }
-    return validNumber;
-  }
 }
