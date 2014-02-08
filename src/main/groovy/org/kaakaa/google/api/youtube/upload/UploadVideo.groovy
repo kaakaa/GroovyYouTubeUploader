@@ -51,6 +51,9 @@ public class UploadVideo {
   /* Global instance of the format used for the video being uploaded (MIME type). */
   private static String VIDEO_FILE_FORMAT = "video/*"
 
+  /* File separator */
+  private static final String SEP = System.getProperty('file.separator')
+
   /**
    * Authorizes the installed application to access user's protected data.
    *
@@ -72,7 +75,7 @@ public class UploadVideo {
 
     // Set up file credential store.
     FileCredentialStore credentialStore = new FileCredentialStore(
-        new File(System.getProperty("user.home"), ".credentials/youtube-api-uploadvideo.json"),
+        new File(System.getProperty("user.home"), ".credentials${SEP}youtube-api-uploadvideo.json"),
         JSON_FACTORY)
 
     // Set up authorization code flow.
