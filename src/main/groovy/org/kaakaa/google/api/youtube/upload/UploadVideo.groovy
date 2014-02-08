@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample
+package org.kaakaa.google.api.youtube.upload
 
 import com.google.api.client.auth.oauth2.Credential
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp

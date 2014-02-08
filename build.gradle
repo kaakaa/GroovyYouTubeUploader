@@ -2,7 +2,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'application'
 
-group = 'com.google.api.services.samples.youtube.cmdline'
+group = 'org.kaakaa.google.api.youtube.upload'
 version = '0.0.1-SNAPSHOT'
 
 description = """youtube-cmdline-uploadvideo-sample"""
@@ -10,17 +10,16 @@ description = """youtube-cmdline-uploadvideo-sample"""
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
-mainClassName = "com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample.YouTubeUploader"
+mainClassName = "org.kaakaa.google.api.youtube.upload.YouTubeUploader"
 
 repositories {
-        
      maven { url "http://repo.jenkins-ci.org/public/" }
      maven { url "http://google-api-client-libraries.appspot.com/mavenrepo" }
      maven { url "http://repo.maven.apache.org/maven2" }
 }
 dependencies {
-    groovy group: 'com.google.apis', name: 'google-api-services-youtube', version:'v3-rev24-1.13.2-beta'
-    groovy group: 'com.google.http-client', name: 'google-http-client-jackson2', version:'1.13.1-beta'
-    groovy group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version:'1.13.1-beta'
+    groovy 'com.google.apis:google-api-services-youtube:v3-rev24-1.13.2-beta'
+    groovy 'com.google.http-client:google-http-client-jackson2:1.13.1-beta'
+    groovy 'com.google.oauth-client:google-oauth-client-jetty:1.13.1-beta'
     groovy 'org.codehaus.groovy:groovy-all:2.2.1'
 }

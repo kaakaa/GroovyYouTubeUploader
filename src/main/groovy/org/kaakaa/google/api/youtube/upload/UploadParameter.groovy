@@ -1,5 +1,4 @@
-package com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample;
-
+package org.kaakaa.google.api.youtube.upload
 import groovy.json.JsonSlurper
 
 import com.google.api.services.youtube.model.VideoSnippet
