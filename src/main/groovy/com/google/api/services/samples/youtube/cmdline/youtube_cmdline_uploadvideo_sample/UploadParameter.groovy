@@ -26,6 +26,10 @@ class UploadParameter {
     return video
   }
 
+  def getVideoFile() {
+    return new File(param.get("UploadFile"))
+  }
+
   private VideoStatus getVideoStatus() {
     /*
      * Set the video to public, so it is available to everyone (what most people want). This is

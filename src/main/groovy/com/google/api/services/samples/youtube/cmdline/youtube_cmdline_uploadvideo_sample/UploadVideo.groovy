@@ -43,8 +43,6 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Video;
-import com.google.api.services.youtube.model.VideoSnippet;
-import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
 
 /**
@@ -131,7 +129,7 @@ public class UploadVideo {
           "youtube-cmdline-uploadvideo-sample").build();
 
       // We get the user selected local video file to upload.
-      File videoFile = getVideoFromUser();
+      File videoFile = param.getVideoFile();
       System.out.println("You chose " + videoFile + " to upload.");
 
       // Add extra information to the video before uploading.
@@ -206,62 +204,4 @@ public class UploadVideo {
       t.printStackTrace();
     }
   }
-
-  /**
-   * Gets the user selected local video file to upload.
-   */
-  private static File getVideoFromUser() throws IOException {
-    File[] listOfVideoFiles = getLocalVideoFiles();
-    System.out.println("======================> " + listOfVideoFiles.length);
-    return getUserChoice(listOfVideoFiles);
-  }
-
-  /**
-   * Gets an array of videos in the current directory.
-   */
-  private static File[] getLocalVideoFiles() throws IOException {
-
-    File currentDirectory = new File(this.param.get("WorkingDirectory"));
-    System.out.println("Video files from " + currentDirectory.getAbsolutePath() + ":");
-
-    // Filters out video files. This list of video extensions is not comprehensive.
-    FilenameFilter videoFilter = new FilenameFilter() {
-      public boolean accept(File dir, String name) {
-        String lowercaseName = name.toLowerCase();
-        if (lowercaseName.endsWith(".webm") || lowercaseName.endsWith(".flv")
-            || lowercaseName.endsWith(".f4v") || lowercaseName.endsWith(".mov")
-            || lowercaseName.endsWith(".mp4") || lowercaseName.endsWith(".mkv")) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    };
-    return currentDirectory.listFiles(videoFilter);
-  }
-
-  /**
-   * Outputs video file options to the user, records user selection, and returns the video (File
-   * object).
-   *
-   * @param videoFiles Array of video File objects
-   */
-  private static File getUserChoice(File[] videoFiles) throws IOException {
-
-    if (videoFiles.length < 1) {
-      throw new IllegalArgumentException("No video files in this directory.");
-    }
-
-    for (int i = 0; i < videoFiles.length; i++) {
-      System.out.println(" " + i + " = " + videoFiles[i].getName());
-    }
-
-    BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-    String inputChoice;
-
-    inputChoice = "0";
-
-    return videoFiles[Integer.parseInt(inputChoice)];
-  }
-
 }
