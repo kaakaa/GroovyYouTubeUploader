@@ -13,13 +13,20 @@ targetCompatibility = 1.6
 mainClassName = "org.kaakaa.google.api.youtube.upload.YouTubeUploader"
 
 repositories {
-     maven { url "http://repo.jenkins-ci.org/public/" }
-     maven { url "http://google-api-client-libraries.appspot.com/mavenrepo" }
-     maven { url "http://repo.maven.apache.org/maven2" }
+  maven { url "http://repo.jenkins-ci.org/public/" }
+  maven { url "http://google-api-client-libraries.appspot.com/mavenrepo" }
+  maven { url "http://repo.maven.apache.org/maven2" }
 }
+
 dependencies {
-    groovy 'com.google.apis:google-api-services-youtube:v3-rev24-1.13.2-beta'
-    groovy 'com.google.http-client:google-http-client-jackson2:1.13.1-beta'
-    groovy 'com.google.oauth-client:google-oauth-client-jetty:1.13.1-beta'
-    groovy 'org.codehaus.groovy:groovy-all:2.2.1'
+  groovy 'com.google.apis:google-api-services-youtube:v3-rev24-1.13.2-beta'
+  groovy 'com.google.http-client:google-http-client-jackson2:1.13.1-beta'
+  groovy 'com.google.oauth-client:google-oauth-client-jetty:1.13.1-beta'
+  groovy 'org.codehaus.groovy:groovy-all:2.2.1'
+}
+
+run {
+  if(project.hasProperty('args')) {
+    args project.args.split('\\s+')
+  }
 }
