@@ -14,19 +14,6 @@
 
 package com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.java6.auth.oauth2.FileCredentialStore;
@@ -62,21 +49,15 @@ public class UploadVideo {
   /** Global instance of the JSON factory. */
   private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
-  /** Global instance of Youtube object to make all API requests. */
-  private static YouTube youtube;
-
   /* Global instance of the format used for the video being uploaded (MIME type). */
   private static String VIDEO_FILE_FORMAT = "video/*";
-
-  /* Upload Video Parameter */
-  private static UploadParameter param;
 
   /**
    * Authorizes the installed application to access user's protected data.
    *
    * @param scopes list of scopes needed to run youtube upload.
    */
-  private static Credential authorize(List<String> scopes) throws Exception {
+  private Credential authorize(List<String> scopes) throws Exception {
 
     // Load client secrets.
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
@@ -112,11 +93,9 @@ public class UploadVideo {
    * Uploads user selected video in the project folder to the user's YouTube account using OAuth2
    * for authentication.
    *
-   * @param args command line args (not used).
+   * @param param Video file parameter
    */
-  def static void upload(UploadParameter param) {
-    this.param = param
-
+  def void upload(UploadParameter param) {
     // Scope required to upload to YouTube.
     List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
 
@@ -125,8 +104,8 @@ public class UploadVideo {
       Credential credential = authorize(scopes);
 
       // YouTube object used to make all API requests.
-      youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(
-          "youtube-cmdline-uploadvideo-sample").build();
+      def youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(
+          "YouTubeUploader").build();
 
       // We get the user selected local video file to upload.
       File videoFile = param.getVideoFile();
