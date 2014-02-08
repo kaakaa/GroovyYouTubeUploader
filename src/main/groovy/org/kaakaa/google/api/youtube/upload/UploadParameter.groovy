@@ -10,13 +10,14 @@ class UploadParameter {
 
   private HashMap param = [:]
 
-  def UploadParameter(String path) {
+  def UploadParameter(String path, File videoFile) {
     def inputFile = new File(path, "upload_conf.json")
     if(inputFile.exists()) {
       this.param = new JsonSlurper().parseText(inputFile.text)
     }
     fillNecessaryParam(path)
 
+    this.param.put('UploadFile', videoFile.absolutePath)
     this.param.put("WorkingDirectory", inputFile.getParent())
   }
 
@@ -54,7 +55,6 @@ class UploadParameter {
     map.put('Description', 'This video was uploaded by YouTubeUploader.')
     map.put('Tags', ['YouTubeUploader'])
     map.put('PrivacyStatus', 'private')
-    map.put('UploadFile', "${path}work/${rootName}.mkv")
     return map
   }
 

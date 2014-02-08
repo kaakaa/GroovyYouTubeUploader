@@ -25,6 +25,7 @@ class ResourceDirectory {
     def mp3List = this.rootDir.listFiles(mp3Filter).collect{ it.absolutePath }
     exec("ffmpeg -y -i concat:${mp3List.join('|')} -acodec copy ${this.conbinedMp3}")
     exec("ffmpeg -y -loop 1 -r 2 -i ${this.thumbnail.absolutePath} -i ${this.conbinedMp3} -c:v libx264 -preset medium -tune stillimage -crf 18 -c:a copy -shortest -pix_fmt yuv420p ${this.outputFile}")
+    return this.outputFile
   }
 
   private FileFilter getMp3Filter(){
@@ -32,7 +33,7 @@ class ResourceDirectory {
   }
 
   def exec(String cmd){
-    println "Excecure cmmand => ${cmd}"
+    println "Excecute command => ${cmd}"
     ProcessBuilder pb = new ProcessBuilder(cmd.split(' '))
     pb.redirectErrorStream(true)
     def process = pb.start()

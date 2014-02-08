@@ -13,9 +13,9 @@ class YouTubeUploader {
   }
 
   private static void process(String dir) {
-    new MakeVideo().make(dir)    
+    def videoFile = new MakeVideo().make(dir)    
 
-    def param = new UploadParameter(dir)
+    def param = new UploadParameter(dir, videoFile)
     new UploadVideo().upload(param)
   }
 }
