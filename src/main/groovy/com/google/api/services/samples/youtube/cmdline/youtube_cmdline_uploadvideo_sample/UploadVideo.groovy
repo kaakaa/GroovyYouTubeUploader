@@ -70,6 +70,9 @@ public class UploadVideo {
   /* Global instance of the format used for the video being uploaded (MIME type). */
   private static String VIDEO_FILE_FORMAT = "video/*";
 
+  /* Upload Video Parameter */
+  private static UploadParameter param;
+
   /**
    * Authorizes the installed application to access user's protected data.
    *
@@ -113,7 +116,8 @@ public class UploadVideo {
    *
    * @param args command line args (not used).
    */
-  public static void main(UploadParameter param) {
+  def static void upload(UploadParameter param) {
+    this.param = param
 
     // Scope required to upload to YouTube.
     List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
@@ -131,41 +135,8 @@ public class UploadVideo {
       System.out.println("You chose " + videoFile + " to upload.");
 
       // Add extra information to the video before uploading.
-      Video videoObjectDefiningMetadata = new Video();
-
-      /*
-       * Set the video to public, so it is available to everyone (what most people want). This is
-       * actually the default, but I wanted you to see what it looked like in case you need to set
-       * it to "unlisted" or "private" via API.
-       */
-      VideoStatus status = new VideoStatus();
-      status.setPrivacyStatus("unlisted");
-      videoObjectDefiningMetadata.setStatus(status);
-
-      // We set a majority of the metadata with the VideoSnippet object.
-      VideoSnippet snippet = new VideoSnippet();
-
-      /*
-       * The Calendar instance is used to create a unique name and description for test purposes, so
-       * you can see multiple files being uploaded. You will want to remove this from your project
-       * and use your own standard names.
-       */
-      Calendar cal = Calendar.getInstance();
-      snippet.setTitle("Test Upload via Java on " + cal.getTime());
-      snippet.setDescription(
-          "Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
-
-      // Set your keywords.
-      List<String> tags = new ArrayList<String>();
-      tags.add("test");
-      tags.add("example");
-      tags.add("java");
-      tags.add("YouTube Data API V3");
-      tags.add("erase me");
-      snippet.setTags(tags);
-
-      // Set completed snippet to the video object.
-      videoObjectDefiningMetadata.setSnippet(snippet);
+      Video videoObjectDefiningMetadata = new Video()
+      param.setParameter(videoObjectDefiningMetadata)
 
       InputStreamContent mediaContent = new InputStreamContent(
           VIDEO_FILE_FORMAT, new BufferedInputStream(new FileInputStream(videoFile)));
@@ -191,20 +162,20 @@ public class UploadVideo {
       MediaHttpUploaderProgressListener progressListener = new MediaHttpUploaderProgressListener() {
         public void progressChanged(MediaHttpUploader uploader) throws IOException {
           switch (uploader.getUploadState()) {
-            case MediaHttpUploader.INITIATION_STARTED:
+            case MediaHttpUploader.UploadState.INITIATION_STARTED:
               System.out.println("Initiation Started");
               break;
-            case MediaHttpUploader.INITIATION_COMPLETE:
+            case MediaHttpUploader.UploadState.INITIATION_COMPLETE:
               System.out.println("Initiation Completed");
               break;
-            case MediaHttpUploader.MEDIA_IN_PROGRESS:
+            case MediaHttpUploader.UploadState.MEDIA_IN_PROGRESS:
               System.out.println("Upload in progress");
               System.out.println("Upload percentage: " + uploader.getProgress());
               break;
-            case MediaHttpUploader.MEDIA_COMPLETE:
+            case MediaHttpUploader.UploadState.MEDIA_COMPLETE:
               System.out.println("Upload Completed!");
               break;
-            case MediaHttpUploader.NOT_STARTED:
+            case MediaHttpUploader.UploadState.NOT_STARTED:
               System.out.println("Upload Not Started!");
               break;
           }
@@ -250,7 +221,7 @@ public class UploadVideo {
    */
   private static File[] getLocalVideoFiles() throws IOException {
 
-    File currentDirectory = new File(".");
+    File currentDirectory = new File(this.param.get("WorkingDirectory"));
     System.out.println("Video files from " + currentDirectory.getAbsolutePath() + ":");
 
     // Filters out video files. This list of video extensions is not comprehensive.
