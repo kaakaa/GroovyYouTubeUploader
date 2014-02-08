@@ -25,6 +25,7 @@ class UploadParameter {
   }
 
   def setParameter(Video video) {
+    println this.param
     video.setStatus(getVideoStatus())
     video.setSnippet(getVideoSnippet())
     return video
@@ -53,7 +54,7 @@ class UploadParameter {
     map.put('Description', 'This video was uploaded by YouTubeUploader.')
     map.put('Tags', ['YouTubeUploader'])
     map.put('PrivacyStatus', 'private')
-    map.put('UploadFile', "${path}${rootName}.mkv")
+    map.put('UploadFile', "${path}work/${rootName}.mkv")
     return map
   }
 

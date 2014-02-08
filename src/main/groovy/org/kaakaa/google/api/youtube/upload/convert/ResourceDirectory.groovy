@@ -6,11 +6,19 @@ class ResourceDirectory {
   private File outputFile
   private File thumbnail
 
+  private static final String sep = System.getProperty('file.separator')
+
   def ResourceDirectory(String rootDir){
+    new File(rootDir, 'work').mkdir()
+
     this.rootDir = new File(rootDir)
-    this.conbinedMp3 = new File(rootDir, "${this.rootDir.name}.mp3")
-    this.outputFile = new File(rootDir, "${this.rootDir.name}.mkv")
+    this.conbinedMp3 = new File(rootDir, "work${sep}${this.rootDir.name}.mp3")
+    this.outputFile = new File(rootDir, "work${sep}${this.rootDir.name}.mkv")
     this.thumbnail = new File(rootDir, "thumbnail.jpg")
+    if(!this.thumbnail.exists()){
+      def encodedPath = getClass().getResource('/default.jpg').path
+      this.thumbnail = new File(URLDecoder.decode(encodedPath))
+    }
   }
 	
   def output(){
