@@ -5,7 +5,7 @@ apply plugin: 'application'
 group = 'org.kaakaa.google.api.youtube.upload'
 version = '0.0.1-SNAPSHOT'
 
-description = """youtube-cmdline-uploadvideo-sample"""
+description = """mp3 files uploader to youtube"""
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -13,7 +13,6 @@ targetCompatibility = 1.6
 mainClassName = "org.kaakaa.google.api.youtube.upload.YouTubeUploader"
 
 repositories {
-  maven { url "http://repo.jenkins-ci.org/public/" }
   maven { url "http://google-api-client-libraries.appspot.com/mavenrepo" }
   maven { url "http://repo.maven.apache.org/maven2" }
 }
