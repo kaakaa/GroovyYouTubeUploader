@@ -8,11 +8,15 @@ import com.google.api.services.youtube.model.Video;
 
 class UploadParameter {
 
-  private HashMap param = null;
+  private HashMap param = [:]
 
   def UploadParameter(String path) {
-    def inputFile = new File(path)
-    this.param = new JsonSlurper().parseText(inputFile.text)
+    def inputFile = new File(path, "upload_conf.json")
+    if(inputFile.exists()) {
+      this.param = new JsonSlurper().parseText(inputFile.text)
+    }
+    fillNecessaryParam(path)
+
     this.param.put("WorkingDirectory", inputFile.getParent())
   }
 
@@ -27,7 +31,30 @@ class UploadParameter {
   }
 
   def getVideoFile() {
-    return new File(param.get("UploadFile"))
+    return new File(param.get("UploadFile").toString())
+  }
+
+  private void fillNecessaryParam(String path) {
+    createDefaultParam(path).each { entry ->
+      if(this.param.get(entry.key) == null){
+        this.param.put(entry.key, entry.value)
+      }
+    }
+  }
+
+  private HashMap createDefaultParam(path) {
+    def fileSeparator = System.getProperty('file.separator')
+    if(!path.endsWith(fileSeparator)) {
+      path += fileSeparator
+    }
+    def rootName = new File(path).name
+    def map = new HashMap()
+    map.put('Title', rootName)
+    map.put('Description', 'This video was uploaded by YouTubeUploader.')
+    map.put('Tags', ['YouTubeUploader'])
+    map.put('PrivacyStatus', 'private')
+    map.put('UploadFile', "${path}${rootName}.mkv")
+    return map
   }
 
   private VideoStatus getVideoStatus() {

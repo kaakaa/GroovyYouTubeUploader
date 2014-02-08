@@ -15,8 +15,7 @@ class YouTubeUploader {
   private static void process(String dir) {
     new MakeVideo().make(dir)    
 
-    def confPath = new File(dir, "upload_conf.json").absolutePath
-    def param = new UploadParameter(confPath)
+    def param = new UploadParameter(dir)
     new UploadVideo().upload(param)
   }
 }
