@@ -1,31 +1,31 @@
 Groovy Youtube Uploader
 =======================
 
-This app combines some mp3 files, then upload video converted from combined mp3 file to YouTube.
+This app combines some MP3 files, then upload video converted from combined MP3 file to YouTube.
 
 This is derived from YouTube Data API sample.
 [youtube-api-samples - YouTube API Sample Applications - Google Project Hosting](https://code.google.com/p/youtube-api-samples/source/browse/#git%2Fsamples%2Fjava%2Fyoutube-cmdline-uploadvideo-sample "youtube-api-samples - YouTube API Sample Applications - Google Project Hosting")
 
-And, This app use ffmpeg for combining and convert mp3 file.
+And, This app use FFmpeg for combining and convert MP3 file.
 [FFmpeg](http://www.ffmpeg.org/ "FFmpeg")
 
 Requirements
 ============
 
 * Java 1.6 higher
-* ffmpeg
+* FFmpeg
 
 Usage
 =====
 
-1. Clone this.
+#### Clone this.
 
 ```
 git clone https://github.com/kaakaa/GroovyYouTubeUploader.git
 cd GroovyYouTubeUploader
 ```
 
-2. Write your YouTube Data API in auth config file.
+#### Write your YouTube Data API in auth config file.
 
 ```
 vi src/main/resources/client_secrets.json
@@ -35,11 +35,39 @@ if you don't have client_id/client_secret, regist your application here.
   => [Google Developers Console](https://code.google.com/apis/console/?api=youtube "Google Developers Console")
 
 
-3. Run app. you don't need Gradle because there is gradlew.
+#### Prepare resource for upload.
 
-```
-gradlew run -Pargs="SampleMusic"
-```
+Sample resource is in SampleMusic directory.
+You must prepare some MP3 files and upload_conf.json
+
+YouTube Video Infomation is written in upload_conf.json
+- Title
+  - Upload Video Title
+  - DEFAULT: upload directory name(ex. SampleMusic)
+- Description
+  - Description about upload video
+  - DEFAULT: "This video was uploaded by YouTubeUploader."
+- Tags
+  - Video tags
+  - DEFAULT: ['YouTubeUploader']
+- PrivacyStatus
+  - Upload video's privacy status
+    - public
+    - unlisted
+    - private
+  - DEFAULT: private
+
+
+If you specify thumbnail image, you must place the image file naming "thumbnail.jpg" in resource directory.
+When You don't specify thumbnail image, use default image.
+![alt DefaultThumbnail][src/main/resources/default.jpg]
+
+
+#### Run app. you don't need Gradle because there is gradlew.
+
+  ```
+  gradlew run -Pargs="SampleMusic"
+  ```
 
 Licenses
 ========
