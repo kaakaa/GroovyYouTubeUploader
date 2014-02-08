@@ -60,7 +60,7 @@ YouTube Video Infomation is written in upload_conf.json
 
 If you specify thumbnail image, you must place the image file naming "thumbnail.jpg" in resource directory.
 When You don't specify thumbnail image, use default image.
-![alt DefaultThumbnail][src/main/resources/default.jpg]
+![alt DefaultThumbnail](https://raw2.github.com/kaakaa/GroovyYouTubeUploader/master/src/main/resources/default.jpg "DefaultThumbnail")
 
 
 #### Run app. you don't need Gradle because there is gradlew.
