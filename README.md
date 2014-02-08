@@ -59,7 +59,8 @@ YouTube Video Infomation is written in upload_conf.json
 
 
 If you specify thumbnail image, you must place the image file naming "thumbnail.jpg" in resource directory.  
-When You don't specify thumbnail image, use default image.  
+
+When You don't specify thumbnail image, be used default image.  
 ![alt DefaultThumbnail](https://raw2.github.com/kaakaa/GroovyYouTubeUploader/master/src/main/resources/default.jpg "DefaultThumbnail")
 
 
