@@ -1,5 +1,4 @@
 apply plugin: 'groovy'
-apply plugin: 'maven'
 apply plugin: 'application'
 
 group = 'org.kaakaa.youtube.upload'
