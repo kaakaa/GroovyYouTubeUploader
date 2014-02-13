@@ -12,8 +12,8 @@ And, This app use FFmpeg for combining and converting MP3 file.
 Requirements
 ============
 
-* Java 1.6 higher
-* FFmpeg
+* Java 1.6 or higher
+* FFmpeg 1.2
 
 Usage
 =====
