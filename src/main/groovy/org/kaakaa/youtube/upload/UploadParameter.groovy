@@ -10,12 +10,12 @@ class UploadParameter {
 
   private HashMap param = [:]
 
-  def UploadParameter(String path, File videoFile) {
+  def UploadParameter(File path, File videoFile) {
     def inputFile = new File(path, "upload_conf.json")
     if(inputFile.exists()) {
       this.param = new JsonSlurper().parseText(inputFile.text)
     }
-    fillNecessaryParam(path)
+    fillNecessaryParam(path.absolutePath)
 
     this.param.put('UploadFile', videoFile.absolutePath)
     this.param.put("WorkingDirectory", inputFile.getParent())
@@ -34,6 +34,15 @@ class UploadParameter {
 
   def getVideoFile() {
     return new File(param.get("UploadFile").toString())
+  }
+
+  def addDurationDescription(Map durations) {
+    def descriptions = [this.param.get('Description')]
+    DurationCalcurator calc = new DurationCalcurator()
+    durations.each { entry ->
+      descriptions << "${calc.total(entry.value)} ${entry.key}"
+    }
+    this.param.put('Description', descriptions.join('\n'))
   }
 
   private void fillNecessaryParam(String path) {
