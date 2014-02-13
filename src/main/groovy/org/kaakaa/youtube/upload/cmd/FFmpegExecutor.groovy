@@ -30,6 +30,7 @@ class FFmpegExecutor {
       println "Executing command is success!!"
     }
     println "======== Finish executing command ========"
+    println ""
 
     return out
   }

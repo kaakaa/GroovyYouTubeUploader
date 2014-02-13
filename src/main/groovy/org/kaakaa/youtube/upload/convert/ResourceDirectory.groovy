@@ -35,9 +35,6 @@ class ResourceDirectory {
     CommandFactory combineCommand = new CombineCommandFactory(mp3List, this.combinedMp3)
     FFmpegExecutor.exec(combineCommand)
 
-    CommandFactory durationCommand = new GetDurationCommandFactory(this.combinedMp3)
-    println FFmpegExecutor.exec(durationCommand)
-
     CommandFactory convertToVideoCommand = new ConvertToVideoCommandFactory(this.combinedMp3, this.outputFile, this.thumbnail)
     FFmpegExecutor.exec(convertToVideoCommand)
 

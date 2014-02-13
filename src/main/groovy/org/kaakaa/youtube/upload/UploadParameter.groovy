@@ -26,7 +26,13 @@ class UploadParameter {
   }
 
   def setParameter(Video video) {
-    println this.param
+    println ""
+    println "-------- Upload Parameters --------"
+    this.param.each { entry ->
+      println "${entry.key} => ${entry.value}"
+      println ""
+    }
+    println "-------- -------- --------"
     video.setStatus(getVideoStatus())
     video.setSnippet(getVideoSnippet())
     return video
